@@ -1,0 +1,29 @@
+{
+    "name":"xsolla/xsolla-php-sdk",
+    "type": "library",
+    "description":"SDK for xsolla payment service",
+    "keywords":["SDK","xsolla"],
+    "homepage": "http://xsolla.com",
+    "license":"MIT",
+    "authors":[
+        {
+            "name":"Vitaliy Zakharov",
+            "email":"v.zakharov@xsolla.com"
+        }
+    ],
+    "support": {
+        "email":"support@xsolla.com"
+    },
+    "require":{
+        "php":">=5.3",
+        "ext-spl": "*",
+        "ext-simplexml": "*"
+    },
+    "autoload":{
+        "psr-0":{
+            "Xsolla":""
+        }
+    },
+    "target-dir":"Xsolla",
+    "minimum-stability":"dev"
+}
