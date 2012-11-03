@@ -68,6 +68,8 @@ class SimpleXmlUrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Xsolla\Api\Exception\NonSucceedResultCodeException
+     * @expectedExceptionCode 10
+     * @expectedExceptionMessage Error
      */
     public function testSendFailOnNonSucceedResultCode()
     {
@@ -76,7 +78,7 @@ class SimpleXmlUrlTest extends \PHPUnit_Framework_TestCase
                     <sum>10</sum>
                     <out>1</out>
                     <result>10</result>
-                    <comment>OK</comment>
+                    <comment>Error</comment>
                 </response>';
         file_put_contents($this->xmlFile, $xml);
         $this->client->send($this->xmlFile);
