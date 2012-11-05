@@ -19,8 +19,8 @@
     },
     "autoload":{
         "psr-0":{
-            "Xsolla":""
+            "Xsolla\\Sdk\\":""
         }
     },
-    "target-dir":"Xsolla",
+    "target-dir":"Xsolla/Sdk"
 }
