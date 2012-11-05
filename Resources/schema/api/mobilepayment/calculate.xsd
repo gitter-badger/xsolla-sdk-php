@@ -33,7 +33,7 @@
 
     <xsd:simpleType name="money" id="money">
         <xsd:restriction base="xsd:decimal">
-            <xsd:pattern value="\d+(\.\d{1,2})?"/>
+            <xsd:pattern value="\d+(\.\d{1,})?"/>
         </xsd:restriction>
     </xsd:simpleType>
 </xsd:schema>
