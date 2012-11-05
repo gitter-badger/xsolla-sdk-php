@@ -2,20 +2,34 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:element name="response" >
         <xsd:complexType>
-            <xsd:all>
-                <xsd:element name="sum" type="money" minOccurs="0" />
-                <xsd:element name="out" type="money" minOccurs="0" />
-                <xsd:element name="result">
-                    <xsd:simpleType>
-                        <xsd:restriction base="xsd:unsignedByte">
-                            <xsd:pattern value="[0-7]"/>
-                        </xsd:restriction>
-                    </xsd:simpleType>
-                </xsd:element>
-                <xsd:element name="comment" type="xsd:string" />
-            </xsd:all>
+            <xsd:choice>
+                <xsd:group ref="error" />
+                <xsd:group ref="ok" />
+            </xsd:choice>
         </xsd:complexType>
     </xsd:element>
+
+    <xsd:group name="error">
+        <xsd:sequence>
+            <xsd:element name="result">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:unsignedByte">
+                        <xsd:pattern value="[1-7]"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="comment" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:group name="ok">
+        <xsd:sequence>
+            <xsd:element name="sum" type="money" />
+            <xsd:element name="out" type="money" />
+            <xsd:element name="result" fixed="0" />
+            <xsd:element name="comment" type="xsd:string" />
+        </xsd:sequence>
+    </xsd:group>
 
     <xsd:simpleType name="money" id="money">
         <xsd:restriction base="xsd:decimal">
