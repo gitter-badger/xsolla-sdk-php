@@ -1,7 +1,7 @@
 {
-    "name":"xsolla/xsolla-php-sdk",
+    "name":"xsolla/xsolla-sdk-php",
     "type": "library",
-    "description":"SDK for xsolla payment service",
+    "description":"Xsolla PHP SDK",
     "keywords":["SDK","xsolla"],
     "homepage": "http://xsolla.com",
     "license":"MIT",
@@ -15,9 +15,7 @@
         "email":"support@xsolla.com"
     },
     "require":{
-        "php":">=5.3",
-        "ext-spl": "*",
-        "ext-simplexml": "*"
+        "php":">=5.3"
     },
     "autoload":{
         "psr-0":{
@@ -25,5 +23,4 @@
         }
     },
     "target-dir":"Xsolla",
-    "minimum-stability":"dev"
 }
