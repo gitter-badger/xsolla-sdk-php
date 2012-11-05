@@ -1,5 +1,5 @@
 <?php
-namespace Xsolla\Api\Exception;
+namespace Xsolla\Sdk\Api\Exception;
 
 /**
  * @author Vitaliy Zakharov <v.zakharov@xsolla.com>
