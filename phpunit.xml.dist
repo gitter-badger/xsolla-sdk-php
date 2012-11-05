@@ -26,6 +26,7 @@
                 <directory>./Tests/</directory>
                 <directory>./Api/Exception/</directory>
                 <directory>./vendor/</directory>
+                <directory>./Resources/</directory>
             </exclude>
         </whitelist>
     </filter>
