@@ -32,7 +32,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param string $url
+     * @param  string                   $url
      * @return \DOMDocument
      * @throws InvalidResponseException If http errors or xml is not valid.
      */
@@ -42,6 +42,7 @@ class Client implements ClientInterface
         if (false === $dom->load($url)) {
             $this->throwInvalidResponseException();
         }
+
         return $dom;
     }
 
