@@ -4,7 +4,7 @@ namespace Xsolla\Sdk\Tests\Api\Exception\ErrorCode;
 use Xsolla\Sdk\Api\Exception\ErrorCode\MobilePaymentException;
 
 /**
- * @author Vitaliy Zakharov <zakharovvi@gmail.com>
+ * @author Vitaliy Zakharov <v.zakharov@xsolla.com>
  */
 class MobilePaymentExceptionTest extends \PHPUnit_Framework_TestCase
 {

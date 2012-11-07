@@ -4,7 +4,7 @@ namespace Xsolla\Sdk\Tests\Api\Client;
 use Xsolla\Sdk\Api\Client\Client;
 
 /**
- * @author Vitaliy Zakharov <zakharovvi@gmail.com>
+ * @author Vitaliy Zakharov <v.zakharov@xsolla.com>
  */
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
