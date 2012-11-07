@@ -2,37 +2,23 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:element name="response" >
         <xsd:complexType>
-            <xsd:choice>
-                <xsd:group ref="error" />
-                <xsd:group ref="ok" />
-            </xsd:choice>
+            <xsd:sequence>
+                <xsd:element name="result">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:unsignedByte">
+                            <xsd:pattern value="[0-7]"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+                <xsd:element name="comment" type="xsd:string" />
+                <xsd:element name="invoice" minOccurs="0">
+                    <xsd:simpleType>
+                        <xsd:restriction base="xsd:unsignedInt">
+                            <xsd:pattern value="[^0]\d*"/>
+                        </xsd:restriction>
+                    </xsd:simpleType>
+                </xsd:element>
+            </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-
-    <xsd:group name="error">
-        <xsd:sequence>
-            <xsd:element name="result">
-                <xsd:simpleType>
-                    <xsd:restriction base="xsd:unsignedByte">
-                        <xsd:pattern value="[1-7]"/>
-                    </xsd:restriction>
-                </xsd:simpleType>
-            </xsd:element>
-            <xsd:element name="comment" type="xsd:string" />
-        </xsd:sequence>
-    </xsd:group>
-
-    <xsd:group name="ok">
-        <xsd:sequence>
-            <xsd:element name="result" fixed="0" />
-            <xsd:element name="comment" type="xsd:string" />
-            <xsd:element name="invoice">
-                <xsd:simpleType>
-                    <xsd:restriction base="xsd:unsignedInt">
-                        <xsd:pattern value="[^0]\d*"/>
-                    </xsd:restriction>
-                </xsd:simpleType>
-            </xsd:element>
-        </xsd:sequence>
-    </xsd:group>
 </xsd:schema>
