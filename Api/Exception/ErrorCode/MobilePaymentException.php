@@ -27,6 +27,6 @@ class MobilePaymentException extends \RuntimeException implements ErrorCodeExcep
 
     public function getCodeDescription()
     {
-        return$this->codes[$this->code];
+        return $this->codes[$this->code];
     }
 }
