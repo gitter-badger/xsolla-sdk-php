@@ -40,7 +40,7 @@ class MobilePayment
 
     /**
      * @param  ClientInterface           $client
-     * @param  string $schemaDir         /path/to/Xsolla/Sdk/Resources/schema/api
+     * @param  string                    $schemaDir /path/to/Xsolla/Sdk/Resources/schema/api
      * @param  int                       $projectId Developer's ID in Xsolla system.
      * @param  string                    $secretKey Developer's secret key.
      * @throws \InvalidArgumentException If one of arguments has invalid format.
@@ -143,7 +143,7 @@ class MobilePayment
 
     /**
      * Calculating the payment amount in roubles that the usershould pay in order to receive a certain amount of virtual currency.
-     * @param  string                         $phone User's phone number. Must be 10 digits. Example 9123456789.
+     * @param  string                      $phone User's phone number. Must be 10 digits. Example 9123456789.
      * @param  float                       $out   Virtual currency amount.
      * @return float                       Payment amount in RUB.
      * @throws \InvalidArgumentException   If phone or sum has invalid format
