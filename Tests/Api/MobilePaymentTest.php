@@ -42,7 +42,7 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionCode 5
      * @expectedExceptionMessage error comment
      */
-    public function testCalculateFailWhenXsollaResponseMotSucceed()
+    public function testCalculateFailWhenXsollaResponseNotSucceed()
     {
         $this->clientMock->expects($this->once())
                 ->method('send')
