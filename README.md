@@ -5,16 +5,16 @@ Xsolla PHP SDK
 
 ## Installation
 
-Using [Composer](http://getcomposer.org) is the recommended way to install Xsolla PHP SDK
+Using [Composer](http://getcomposer.org) is the recommended way to install Xsolla PHP SDK.
 
-1. Download and install Composer.
+1\. Download and install Composer.
 
 ``` bash
 $ cd path/to/your/project
 $ curl -s "http://getcomposer.org/installer" | php
 ```
 
-1.  Add this in your project's `composer.json` file:
+2\. Add this in your project's `composer.json` file.
 
 ``` json
 {
@@ -24,13 +24,13 @@ $ curl -s "http://getcomposer.org/installer" | php
 }
 ```
 
-1. Install dependencies.
+3\. Install dependencies.
 
 ``` bash
 $ php composer.phar install
 ```
 
-1. Require Composer's autoloader.
+4\. Require Composer's autoloader.
 
 ``` php
 require '/path/to/your/project/vendor/autoload.php';
