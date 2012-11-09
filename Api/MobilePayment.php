@@ -71,7 +71,7 @@ class MobilePayment
      * @param  float                     $sum    Payment amount in RUB. $sum and $out cannot both be present. Must contain 2 or fewer digits after the decimal point.
      * @param  float                     $out    Virtual currency amount. $sum and $out cannot both be present.
      * @param  string                    $email  User's email
-     * @param  string                    $userIp User's IP address
+     * @param  string                    $userIp User's IP address. Only public.
      * @return string                    Invoice number.
      * @throws \InvalidArgumentException If one of arguments has invalid format.
      * @throws InvalidResponseException  If network problem or response has invalid format.
@@ -113,7 +113,7 @@ class MobilePayment
         $stringForSignature .= $phone;
         //ip
         if (!is_null($userIp)) {
-            if (!filter_var($userIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            if (!filter_var($userIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
                 throw new \InvalidArgumentException;
             }
             $urlVars['userip'] = $userIp;

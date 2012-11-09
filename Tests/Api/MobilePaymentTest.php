@@ -138,7 +138,7 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
     {
         $this->clientMock->expects($this->never())
             ->method('send');
-        $this->mobilePayment->invoice(self::PHONE, 'demo', null, null, 11, null, 'example@example.com', '127.0.0.00');
+        $this->mobilePayment->invoice(self::PHONE, 'demo', null, null, 11, null, 'example@example.com', '127.0.0.1');
     }
 
     /**
