@@ -15,7 +15,7 @@
         "email":"support@xsolla.com"
     },
     "require":{
-        "php":">=5.3"
+        "php":">=5.3.6"
     },
     "autoload":{
         "psr-0":{
