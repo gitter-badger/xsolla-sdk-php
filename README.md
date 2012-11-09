@@ -68,6 +68,7 @@ $invoiceNumber = $mobilePayment->invoice(
 To run the test suite, you need [composer](http://getcomposer.org) and [PHPUnit](https://github.com/sebastianbergmann/phpunit).
 
 ``` bash
+$ cd /path/to/xsolla/xsolla-sdk-php
 $ php composer.phar install
 $ phpunit
 ```
