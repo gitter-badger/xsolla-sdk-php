@@ -40,13 +40,16 @@ class MobilePayment
 
     /**
      * @param  ClientInterface           $client
-     * @param  string                    $schemaDir /path/to/Xsolla/Sdk/Resources/schema/api
      * @param  int                       $projectId Developer's ID in Xsolla system.
      * @param  string                    $secretKey Developer's secret key.
+     * @param  string                    $schemaDir /path/to/Xsolla/Sdk/Resources/schema/api
      * @throws \InvalidArgumentException If one of arguments has invalid format.
      */
-    public function __construct(ClientInterface $client, $schemaDir, $projectId, $secretKey)
+    public function __construct(ClientInterface $client, $projectId, $secretKey, $schemaDir = null)
     {
+        if (is_null($schemaDir)) {
+            $schemaDir = __DIR__.'/../Resources/schema/api';
+        }
         if (!is_dir($schemaDir)) {
             throw new \InvalidArgumentException("$schemaDir is not a dir.");
         }

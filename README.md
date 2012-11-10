@@ -46,7 +46,6 @@ use Xsolla\Sdk\Api\MobilePayment;
 
 $mobilePayment = new MobilePayment(
     new Client,
-    '/path/to/your/project/vendor/xsolla/xsolla-sdk-php/Xsolla/Sdk/Resources/schema/api',
     4783,//demo project
     'key'//secret key for demo project
 );
