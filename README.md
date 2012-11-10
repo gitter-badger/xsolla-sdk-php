@@ -52,14 +52,14 @@ $mobilePayment = new MobilePayment(
 );
 $paymentAmountInRub = $mobilePayment->calculateSum(
     '9120000000',//example phone number
-    10,//virtual currency amount
+    10//virtual currency amount
 );
 $invoiceNumber = $mobilePayment->invoice(
     '9120000000',//example phone number
     'demo',//example v1(User ID)
     null,//v2
     null,//v3
-    100,//payment amount
+    100//payment amount
 );
 ```
 
