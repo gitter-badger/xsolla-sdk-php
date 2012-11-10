@@ -11,12 +11,12 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
     /**
      * @var MobilePayment
      */
-    private $mobilePayment;
+    protected $mobilePayment;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    private $clientMock;
+    protected $clientMock;
 
     const PROJECT = 4783;
 
@@ -26,7 +26,19 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
 
     const PHONE = 9630123817;
 
-    private $caclulateResponse = array(
+    protected $calculateSumTestUrl =  'https://api.xsolla.com/mobile/payment/index.php?command=calculate&project=4783&out=10&phone=9630123817&md5=15ab2801202b594dc0706176616771d2';
+
+    /**
+     * $md5 = md5('calculate4783109630123817key');
+     */
+    protected $calculateOutTestUrl = 'https://api.xsolla.com/mobile/payment/index.php?command=calculate&project=4783&sum=10&phone=9630123817&md5=15ab2801202b594dc0706176616771d2';
+
+    /*
+     * $md5 = md5('invoice4783demo543.89999120000000192.33.19.70mail@example.comkey');
+     */
+    protected $invoiceTestUrl = 'https://api.xsolla.com/mobile/payment/index.php?command=invoice&project=4783&v1=demo&v2=demo-v2&v3=demo-v3&out=543.8999&phone=9120000000&userip=192.33.19.70&email=mail%40example.com&md5=3ee70d833166f544674d67767969a84e';
+
+    private $calculateResponse = array(
         'sum' => '11.07',
         'out' => '1.5',
         'result' => '0',
@@ -60,7 +72,7 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
                 $this->anything(),
                 new \PHPUnit_Framework_Constraint_Callback($assertSchemaFilePathEquals)
             )
-            ->will($this->returnValue($this->caclulateResponse));;
+            ->will($this->returnValue($this->calculateResponse));;
         $mobilePayment->calculateSum(self::PHONE, 150);
     }
 
@@ -80,7 +92,7 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testCalculateOutFailWhenPhoneHasInvalidFormat()
+    public function testCalculateFailWhenPhoneHasInvalidFormat()
     {
         $this->clientMock->expects($this->never())
             ->method('send');
@@ -88,23 +100,32 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider InvalidOutProvider
      * @expectedException \InvalidArgumentException
      */
-    public function testCalculateSumFailWhenSumHasInvalidFormat()
+    public function testCalculateSumFailWhenOutHasInvalidFormat($invalidOut)
     {
         $this->clientMock->expects($this->never())
             ->method('send');
-        $this->mobilePayment->calculateSum(self::PHONE, 0);
+        $this->mobilePayment->calculateSum(self::PHONE, $invalidOut);
+    }
+
+    public function InvalidOutProvider()
+    {
+        return array(
+            array(0),
+            //array(array(1)),
+            array(''),
+        );
     }
 
     public function testCalculateSum()
     {
         $expectedXsdFileName = self::SCHEMA_DIR.MobilePayment::XSD_PATH_CALCULATE;
-        $expectedUrl = 'https://api.xsolla.com/mobile/payment/index.php?command=calculate&project=4783&out=10&phone=9630123817&md5=15ab2801202b594dc0706176616771d2';
         $this->clientMock->expects($this->once())
                 ->method('send')
-                ->with($expectedUrl, $expectedXsdFileName)
-                ->will($this->returnValue($this->caclulateResponse));
+                ->with($this->calculateSumTestUrl, $expectedXsdFileName)
+                ->will($this->returnValue($this->calculateResponse));
         $this->assertEquals(
             11.07,
             $this->mobilePayment->calculateSum(self::PHONE, 10)
@@ -114,12 +135,10 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
     public function testCalculateOut()
     {
         $expectedXsdFileName = self::SCHEMA_DIR.MobilePayment::XSD_PATH_CALCULATE;
-        //$md5 = md5('calculate4783109630123817key');
-        $expectedUrl = 'https://api.xsolla.com/mobile/payment/index.php?command=calculate&project=4783&sum=10&phone=9630123817&md5=15ab2801202b594dc0706176616771d2';
         $this->clientMock->expects($this->once())
                 ->method('send')
-                ->with($expectedUrl, $expectedXsdFileName)
-                ->will($this->returnValue($this->caclulateResponse));
+                ->with($this->calculateOutTestUrl, $expectedXsdFileName)
+                ->will($this->returnValue($this->calculateResponse));
         $this->assertEquals(
             1.5,
             $this->mobilePayment->calculateOut(self::PHONE, 10)
@@ -187,8 +206,7 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
         $this->clientMock->expects($this->once())
             ->method('send')
             ->with(
-                //$md5 = md5('invoice4783demo12.459120000000key');
-                'https://api.xsolla.com/mobile/payment/index.php?command=invoice&project=4783&v1=demo&sum=12.45&phone=9120000000&md5=d1e7b81eeebf2c6d48f7481ecea0562c',
+               $this->anything(),
                $expectedXsdFileName
             )
             ->will($this->returnValue(array('result' => '3', 'comment' => 'error comment 3')));
@@ -213,8 +231,7 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
         $this->clientMock->expects($this->once())
             ->method('send')
             ->with(
-                //$md5 = md5('invoice4783demo543.89999120000000192.33.19.70mail@example.comkey');
-                'https://api.xsolla.com/mobile/payment/index.php?command=invoice&project=4783&v1=demo&out=543.8999&phone=9120000000&userip=192.33.19.70&email=mail%40example.com&md5=3ee70d833166f544674d67767969a84e',
+               $this->invoiceTestUrl,
                $expectedXsdFileName
             )
             ->will($this->returnValue(array(
@@ -224,7 +241,7 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
             )));
         $this->assertEquals(
             '141235145',
-            $this->mobilePayment->invoice(9120000000, 'demo', null, null, null, 543.8999, 'mail@example.com', '192.33.19.70')
+            $this->mobilePayment->invoice(9120000000, 'demo', 'demo-v2', 'demo-v3', null, 543.8999, 'mail@example.com', '192.33.19.70')
         );
     }
 }

@@ -12,8 +12,6 @@ use Xsolla\Sdk\Api\Exception\InvalidResponseException;
  */
 class MobilePayment
 {
-    const URL = 'https://api.xsolla.com/mobile/payment/index.php?';
-
     const XSD_PATH_CALCULATE = '/mobilepayment/calculate.xsd';
 
     const XSD_PATH_INVOICE = '/mobilepayment/invoice.xsd';
@@ -37,6 +35,11 @@ class MobilePayment
      * @var string
      */
     private $schemaDir;
+
+    /**
+     * @var string
+     */
+    protected $url = 'https://api.xsolla.com/mobile/payment/index.php?';
 
     /**
      * @param  ClientInterface           $client
@@ -130,13 +133,7 @@ class MobilePayment
             $urlVars['email'] = $email;
             $stringForSignature .= $email;
         }
-        $urlVars['md5'] = md5($stringForSignature.$this->secretKey);
-        $url = self::URL.http_build_query($urlVars);
-        $xsdFileName = $this->schemaDir.self::XSD_PATH_INVOICE;
-        $xsollaResponse = $this->client->send($url, $xsdFileName);
-        if ('0' !== $xsollaResponse['result']) {
-            throw new MobilePaymentException($xsollaResponse['comment'], $xsollaResponse['result']);
-        }
+        $xsollaResponse = $this->send($urlVars, $stringForSignature, self::XSD_PATH_INVOICE);
         if (!isset($xsollaResponse['invoice'])) {
             throw new InvalidResponseException('Xsolla response doesn\'t contain invoice number.');
         }
@@ -180,6 +177,19 @@ class MobilePayment
         return $this->calculate($phone, $sum, 'sum');
     }
 
+    protected function send(array $urlVars, $stringForSignature, $schemaFile)
+    {
+        $urlVars['md5'] = md5($stringForSignature.$this->secretKey);
+        $url = $this->url.http_build_query($urlVars);
+        $xsdFileName = $this->schemaDir.$schemaFile;
+        $xsollaResponse = $this->client->send($url, $xsdFileName);
+        if ('0' !== $xsollaResponse['result']) {
+            throw new MobilePaymentException($xsollaResponse['comment'], $xsollaResponse['result']);
+        }
+
+        return $xsollaResponse;
+    }
+
     private function calculate($phone, $number, $numberType)
     {
         if (!$this->isValidPhoneFormat($phone)) {
@@ -191,13 +201,7 @@ class MobilePayment
         $stringForSignature .= $number;
         $stringForSignature .= $phone;
         $urlVars['phone'] = $phone;
-        $urlVars['md5'] = md5($stringForSignature.$this->secretKey);
-        $url = self::URL.http_build_query($urlVars);
-        $xsdFileName = $this->schemaDir.self::XSD_PATH_CALCULATE;
-        $xsollaResponse = $this->client->send($url, $xsdFileName);
-        if ('0' !== $xsollaResponse['result']) {
-            throw new MobilePaymentException($xsollaResponse['comment'], $xsollaResponse['result']);
-        }
+        $xsollaResponse = $this->send($urlVars, $stringForSignature, self::XSD_PATH_CALCULATE);
         if ('sum' === $numberType) {
             return (float) $xsollaResponse['out'];
         }

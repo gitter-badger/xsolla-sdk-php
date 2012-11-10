@@ -38,13 +38,13 @@ require '/path/to/your/project/vendor/autoload.php';
 
 ## Usage
 
-#### [Mobile Payment API](http://xsolla.com/docs/mobile-payment-api)
+#### [Mobile Payment API](http://xsolla.com/docs/mobile-payment-api) & [Qiwi Wallet Billing API](http://xsolla.com/docs/quick-qiwi)
 
 ``` php
 use Xsolla\Sdk\Api\Client\Client;
-use Xsolla\Sdk\Api\MobilePayment;
+use Xsolla\Sdk\Api\MobilePayment;//or use Xsolla\Sdk\Api\QiwiWalletBilling;
 
-$mobilePayment = new MobilePayment(
+$mobilePayment = new MobilePayment(//or new QiwiWalletBilling
     new Client,
     4783,//demo project
     'key'//secret key for demo project
