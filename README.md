@@ -12,6 +12,7 @@ Using [Composer](http://getcomposer.org) is the recommended way to install Xsoll
 ``` bash
 $ cd path/to/your/project
 $ curl -s "http://getcomposer.org/installer" | php
+$ php composer.phar init
 ```
 
 2\. Add this in your project's `composer.json` file.
