@@ -24,7 +24,7 @@
             <directory>./</directory>
             <exclude>
                 <directory>./Tests/</directory>
-                <directory>./Api/Exception/</directory>
+                <file>./Api/Exception/InvalidResponseException.php</file>
                 <directory>./vendor/</directory>
                 <directory>./Resources/</directory>
             </exclude>
