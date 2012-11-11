@@ -114,9 +114,19 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(0),
-            //array(array(1)),
+            array(array(1)),
             array(''),
         );
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCalculateOutFailWhenSumHasInvalidFormat()
+    {
+        $this->clientMock->expects($this->never())
+            ->method('send');
+        $this->mobilePayment->calculateOut(self::PHONE, 12.345);
     }
 
     public function testCalculateSum()

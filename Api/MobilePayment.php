@@ -97,13 +97,13 @@ class MobilePayment
         if (!is_null($sum) AND !is_null($out)) {
             throw new \InvalidArgumentException('Sum and out cannot both be present.');
         } elseif (!is_null($sum)) {
-            if (!$this->isValidSumFormat($sum, true)) {
+            if (!$this->isValidAmountFormat($sum, true)) {
                throw new \InvalidArgumentException("$sum - out has invalid format.");
             }
             $urlVars['sum'] = $sum;
             $stringForSignature .= $sum;
         } elseif (!is_null($out)) {
-            if (!$this->isValidSumFormat($out, false)) {
+            if (!$this->isValidAmountFormat($out, false)) {
                throw new \InvalidArgumentException("$out - out has invalid format.");
             }
             $urlVars['out'] = $out;
@@ -152,8 +152,11 @@ class MobilePayment
      */
     public function calculateSum($phone, $out)
     {
-        if (!$this->isValidSumFormat($out)) {
-            throw new \InvalidArgumentException("$out - out is not a float");
+        if (!is_scalar($out)) {
+            throw new \InvalidArgumentException("out has invalid format");
+        }
+        if (!$this->isValidAmountFormat($out)) {
+            throw new \InvalidArgumentException("$out - out has invalid format");
         }
 
         return $this->calculate($phone, $out, 'out');
@@ -170,8 +173,11 @@ class MobilePayment
      */
     public function calculateOut($phone, $sum)
     {
-        if (!$this->isValidSumFormat($sum)) {
-            throw new \InvalidArgumentException("$sum - sum is not a float");
+        if (!is_scalar($sum)) {
+            throw new \InvalidArgumentException("sum has invalid format");
+        }
+        if (!$this->isValidAmountFormat($sum, true)) {
+            throw new \InvalidArgumentException("$sum - sum has invalid format");
         }
 
         return $this->calculate($phone, $sum, 'sum');
@@ -209,7 +215,7 @@ class MobilePayment
         return (float) $xsollaResponse['sum'];
     }
 
-    private function isValidSumFormat($sum, $isMoney = false)
+    private function isValidAmountFormat($sum, $isMoney = false)
     {
         if ($isMoney) {
             $pattern = '~^\d+(\.\d{1,2})?$~';
