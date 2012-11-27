@@ -190,7 +190,6 @@ class MobilePayment
         $urlVars['md5'] = md5($stringForSignature.$this->secretKey);
         $url = $this->url.http_build_query($urlVars);
         $xsdFileName = $this->schemaDir.$schemaFile;
-        echo $url.PHP_EOL; exit;
         $xsollaResponse = $this->client->send($url, $xsdFileName);
         if ('0' !== $xsollaResponse['result']) {
             throw new MobilePaymentException($xsollaResponse['comment'], $xsollaResponse['result']);
