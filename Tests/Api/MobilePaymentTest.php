@@ -36,7 +36,7 @@ class MobilePaymentTest extends \PHPUnit_Framework_TestCase
     /*
      * $md5 = md5('invoice4783demo543.89999120000000192.33.19.70mail@example.comkey');
      */
-    protected $invoiceTestUrl = 'https://api.xsolla.com/mobile/payment/index.php?command=invoice&project=4783&v1=demo&v2=demo-v2&v3=demo-v3&out=543.8999&phone=9120000000&userip=192.33.19.70&email=mail%40example.com&md5=3ee70d833166f544674d67767969a84e';
+    protected $invoiceTestUrl = 'https://api.xsolla.com/mobile/payment/index.php?command=invoice&project=4783&v1=demo&v2=demo-v2&v3=demo-v3&out=543.8999&phone=9120000000&userip=192.33.19.70&email=mail%40example.com&md5=80e32de0fe54fa81f36d7ba6a35a7728';
 
     private $calculateResponse = array(
         'sum' => '11.07',
