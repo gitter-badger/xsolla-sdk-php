@@ -20,7 +20,7 @@ class QiwiWalletBillingTest extends MobilePaymentTest
     /*
      * $md5 = md5('invoice4783demo543.89999120000000192.33.19.70mail@example.comqiwikey');
      */
-    protected $invoiceTestUrl = 'https://api.xsolla.com/invoicing/index.php?command=invoice&project=4783&v1=demo&v2=demo-v2&v3=demo-v3&out=543.8999&phone=9120000000&userip=192.33.19.70&email=mail%40example.com&ps=qiwi&md5=53189f18708feb704ec229ec30bd73cf';
+    protected $invoiceTestUrl = 'https://api.xsolla.com/invoicing/index.php?command=invoice&project=4783&v1=demo&v2=demo-v2&v3=demo-v3&out=543.8999&phone=9120000000&userip=192.33.19.70&email=mail%40example.com&ps=qiwi&md5=a6e40216b44f737febd8c78cbc3ee27c';
 
     public function setUp()
     {
